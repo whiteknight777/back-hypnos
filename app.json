@@ -1,0 +1,8 @@
+{
+  "name": "ONYX-API: Node.js",
+  "description": "A API Node.js app using Express Js",
+  "repository": "https://gitlab.com/desirearra/onyx-api",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
