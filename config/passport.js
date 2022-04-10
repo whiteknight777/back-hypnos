@@ -2,11 +2,11 @@
 const LocalStrategy = require('passport-local').Strategy;
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
-const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
-const Users = require('../models/users');
 const utils = require('../lib/utils');
+const { PrismaClient } = require('@prisma/client')
+const { Users } = new PrismaClient()
 
 const pathTokey = path.join(__dirname, '../keypair/id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathTokey, 'utf8');
@@ -25,7 +25,11 @@ module.exports = (passport) => {
 		new LocalStrategy(
 			{ usernameField: 'email' },
 			async (email, password, done) => {
-				Users.findOne({ email }).then((user) => {
+				Users.findUnique({
+					where: {
+						email
+					},
+				  }).then((user) => {
 					if (!user)
 						return done(null, false, { message: "user doesn't exist." });
 					// Function defined at bottom of app.js

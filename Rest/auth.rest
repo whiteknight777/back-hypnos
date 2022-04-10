@@ -1,0 +1,15 @@
+// LOGIN TO THE APP
+###
+POST http://localhost:3006/auth/login 
+content-type: application/json
+
+{
+    "email": "admin@demo.com",
+    "password": "demo2"
+}
+
+// GET USER INFORMATIONS
+###
+GET http://localhost:3006/auth/me 
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWY1ZTlmNDFiZjNhMjM5Yjg0NDM1MWEiLCJpYXQiOjE2NDM1MDY3MzEzMDMsImV4cCI6MTY0MzUwNjczMTMwM30.EtT1dTyOE_eN8VODhDpr6PBQNNjY4pp2KrGNchNWDwviexUfsLtZsHVWlBGs5t1JOoAmuUk_2OPvdF93UGZkwj9c1mf3SES1e37TSJ08pr3DyYWVeJpf3gcheIlDkwbxqs5i6TiDl5J9G0NOMFsZiSX46DGL78D6AbkaH0hVS4Pg1_cGi1KKdkQmm6se5hHhu4Tw7ovRLxgBxMb7Zkqg2TLovjmkVSoljxf3_qoadmFBeblgm1g4XAZMOX5zQD_0dESuHYwNhYm7KUM0yrsHJryxrpqPWNV-XoNZFfw2wnI4PGvpb5oG9FKWU66D34Be01co27OirephYG0OiPHBwEo-YV76JIJW2OAepDXXtfaPNT0lvg2bx0kigdjDzznJXYgL8QH7BqJ51SJVt7ZmEJCouUvQ4R3gnMTB4HcQ8QRJWCO51znVZonwKXSxLeXqkavadwzOw_1Np7DQLh064PE3_Krw5tWPgpVdZrRMYjh6UBU7qtlcQvKGp6sKx_Uyb8wFDMUXYx6gnSiJybOv1Idwa_juNZwEVaFGdkEmDqi1KVFjCb_mUCmr57gXGhIk8rfrc9p9BYzD8wYv6HWJYhtnoLefTl8w-3XEhOMCHOby2E7vzD2srKIgvgGsXb0FjvicJzWwJTRslwIIsuf0_nM6fmKqDKJ7PkMQGs94yiY

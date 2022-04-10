@@ -19,6 +19,7 @@ router.post('/login', async (req, res, next) => {
 			if (err || !user) {
 				return res.status(401).json({
 					success: false,
+					error: 'email or password incorrect.',
 				});
 			}
 
@@ -29,7 +30,6 @@ router.post('/login', async (req, res, next) => {
 				return res.json({
 					success: true,
 					accessToken: tokenObject.token,
-					expiresIn: tokenObject.expires,
 				});
 			});
 		} catch (error) {
