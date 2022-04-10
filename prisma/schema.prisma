@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ********************************************
+// *                  MODELS                  *
+// ********************************************
+
+model Users {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  firstName String
+  lastName  String
+  role      String
+  hash      String
+  salt      String
+  isDeleted Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Bookings  Bookings[]
+}
+
+model Facilities {
+  id          String     @id @default(uuid())
+  name        String     @db.VarChar(255)
+  city        String
+  address     String
+  description String     @db.VarChar(1000)
+  isDeleted   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  messages    Messages[]
+  Bookings    Bookings[]
+}
+
+model Rooms {
+  id          String     @id @default(uuid())
+  title       String     @db.VarChar(255)
+  description String     @db.VarChar(1000)
+  price       Decimal
+  isDeleted   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  medias      Medias[]
+  services    Services[]
+  Bookings    Bookings[]
+}
+
+model Medias {
+  id           String   @id @default(uuid())
+  absolutePath String   @unique
+  room         Rooms    @relation(fields: [roomId], references: [id])
+  roomId       String
+  extension    String
+  isMain       Boolean  @default(false)
+  isDeleted    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Services {
+  id        String   @id @default(uuid())
+  room      Rooms    @relation(fields: [roomId], references: [id])
+  roomId    String
+  title     String   @db.VarChar(255)
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bookings {
+  id         String     @id @default(uuid())
+  user       Users      @relation(fields: [userId], references: [id])
+  userId     String
+  facility   Facilities @relation(fields: [facilityId], references: [id])
+  facilityId String
+  room       Rooms      @relation(fields: [roomId], references: [id])
+  roomId     String
+  startDate  DateTime
+  endDate    DateTime
+  days       Int
+  isDeleted  Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model FeedBackTypes {
+  id        String     @id @default(uuid())
+  title     String
+  isDeleted Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Messages  Messages[]
+}
+
+model Messages {
+  id             String        @id @default(uuid())
+  firstName      String
+  lastName       String
+  email          String
+  text           String        @db.VarChar(1000)
+  facility       Facilities    @relation(fields: [facilityId], references: [id])
+  facilityId     String
+  feedBackType   FeedBackTypes @relation(fields: [feedBackTypeId], references: [id])
+  feedBackTypeId String
+  createdAt      DateTime      @default(now())
+}
