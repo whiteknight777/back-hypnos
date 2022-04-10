@@ -23,10 +23,10 @@ app.use(cors(corsOptions));
 
 
 // PASSPORT CONFIG
-// const passport = require('passport');
-// const initializePassport = require('./config/passport');
-// initializePassport(passport);
-// app.use(passport.initialize());
+const passport = require('passport');
+const initializePassport = require('./config/passport');
+initializePassport(passport);
+app.use(passport.initialize());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,8 +40,10 @@ app.set('view engine', 'ejs');
  * -------------- API REST V1 ----------------
  */
 const authRouter = require('./routes/V1/auth');
+const usersRouter = require('./routes/V1/users');
 
 app.use('/auth', authRouter);
+app.use('/users', usersRouter);
 
 /**
  * -------------- API VIEWS ----------------
