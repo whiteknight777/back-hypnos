@@ -25,18 +25,22 @@ module.exports = (passport) => {
 		new LocalStrategy(
 			{ usernameField: 'email' },
 			async (email, password, done) => {
-				Users.findUnique({
-					where: {
-						email
-					},
-				  }).then((user) => {
-					if (!user)
-						return done(null, false, { message: "user doesn't exist." });
-					// Function defined at bottom of app.js
-					const isValid = utils.validPassword(password, user.hash, user.salt);
-					if (isValid) return done(null, user);
-					return done(null, false, { message: 'Password incorrect' });
-				});
+				try {
+					Users.findUnique({
+						where: {
+							email
+						},
+					}).then((user) => {
+						if (!user)
+							return done(null, false, { message: "user doesn't exist." });
+						// Function defined at bottom of app.js
+						const isValid = utils.validPassword(password, user.hash, user.salt);
+						if (isValid) return done(null, user);
+						return done(null, false, { message: 'Password incorrect' });
+					});
+				} catch (error) {
+					console.error(error.message)
+				}
 			}
 		)
 	);
@@ -44,10 +48,18 @@ module.exports = (passport) => {
 	passport.use(
 		new JWTstrategy(options, async (jwt_payload, done) => {
 			// We will assign the `sub` property on the JWT to the database ID of user
-			Users.findOne({ _id: jwt_payload.sub }, (err, user) => {
-				if (err) return done(err);
-				return done(null, user);
-			});
+			try {
+				Users.findUnique({
+					where: {
+						id: jwt_payload?.sub
+					},
+				}).then((user) => {
+					if (!user) return done(err);
+					return done(null, user);
+				});
+			} catch (error) {
+				console.error(error.message)
+			}
 		})
 	);
 };
