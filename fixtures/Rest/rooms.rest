@@ -1,0 +1,45 @@
+//
+//------------- GET ALL ROOMS ----------------
+//
+###
+GET http://localhost:3006/rooms 
+content-type: application/json
+
+
+//
+//------------- GET ONE ROOM ----------------
+//
+###
+GET http://localhost:3006/rooms/030b79ee-e5d1-45a4-bd7a-2c24d132b4a1
+content-type: application/json
+
+
+//
+//------------- UPDATE ONE ROOM ----------------
+//
+###
+PUT http://localhost:3006/rooms/030b79ee-e5d1-45a4-bd7a-2c24d132b4a1
+content-type: application/json
+
+{
+    "title": "Suite 1",
+    "price": 125.9,
+    "facilityId": "6cc33049-7e51-4a74-bdd6-b14fe69254e3",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+    "isDeleted": false
+}
+
+//
+//------------- ROOMS ADD ----------------
+//
+###
+POST http://localhost:3006/rooms
+Content-Type: application/json
+
+{
+    "title": "Suite 10",
+    "price": 99,
+    "facilityId": "6cc33049-7e51-4a74-bdd6-b14fe69254e3",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+    "isDeleted": false
+}

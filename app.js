@@ -41,9 +41,13 @@ app.set('view engine', 'ejs');
  */
 const authRouter = require('./routes/V1/auth');
 const usersRouter = require('./routes/V1/users');
+const facilitiesRouter = require('./routes/V1/facilities');
+const roomsRouter = require('./routes/V1/rooms');
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/facilities', facilitiesRouter);
+app.use('/rooms', roomsRouter);
 
 /**
  * -------------- API VIEWS ----------------

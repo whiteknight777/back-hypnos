@@ -1,0 +1,53 @@
+//
+//------------- GET ALL FACILITIES ----------------
+//
+###
+GET http://localhost:3006/facilities 
+content-type: application/json
+
+
+//
+//------------- GET ONE FACILITY ----------------
+//
+###
+GET http://localhost:3006/facilities/0618e7b0-0e93-467a-91a5-cb65f01e83b
+content-type: application/json
+
+
+//
+//------------- UPDATE ONE FACILITY ----------------
+//
+###
+PUT http://localhost:3006/facilities/0618e7b0-0e93-467a-91a5-cb65f01e83b
+content-type: application/json
+
+{
+    "name": "Etablissement 1",
+    "city": "Lyon",
+    "address": "63 Rue Denuzière (69002)",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+    "isDeleted": false
+}
+
+//
+//------------- FACILITIES ADD ----------------
+//
+###
+POST http://localhost:3006/facilities
+Content-Type: application/json
+
+{
+    "name": "Etablissement 1",
+    "city": "Lyon",
+    "address": "63 Rue Denuzière (69002)",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+    "isDeleted": false
+}
+
+
+//
+//------------- FACILITIES FIXTURES ----------------
+//
+###
+POST http://localhost:3006/facilities/fixtures
+content-type: application/json

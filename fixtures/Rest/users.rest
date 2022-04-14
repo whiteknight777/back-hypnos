@@ -22,16 +22,11 @@ PUT http://localhost:3006/users/a9771265-b0f1-429c-86e9-45e797bdee24
 content-type: application/json
 
 {
-    "username": "admin",
     "email": "admin@demo.com",
-    "firstname": "Desire",
-    "lastname": "ARRA",
-    "fullname": "Desire ARRA",
-    "roles": "ROLE_USER",
-    "pic": "/media/users/300_21.jpg",
-    "language": "fr",
-    "timeZone": "International Date Line West",
-    "isEnabled": true
+    "firstName": "Desire",
+    "lastName": "ARRA",
+    "role": "ADMIN",
+    "isDeleted": false
 }
 
 //
@@ -42,8 +37,8 @@ PATCH http://localhost:3006/users/change-password
 content-type: application/json
 
 {
-    "_id": "61faa328c770a4106ace2541",
-    "password": "demo2",
+    "id": "a9771265-b0f1-429c-86e9-45e797bdee24",
+    "password": "1234",
     "newPassword": "demo"
 }
 
@@ -59,5 +54,12 @@ Content-Type: application/json
     "password": "demo",
     "firstName": "Desire",
     "lastName": "ARRA",
-    "role": "ROLE_ADMIN"
+    "role": "ADMIN"
 }
+
+//
+//------------- USERS FIXTURES ----------------
+//
+###
+POST http://localhost:3006/users/fixtures
+content-type: application/json

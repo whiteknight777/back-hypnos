@@ -14,12 +14,18 @@ generator client {
 // *                  MODELS                  *
 // ********************************************
 
+enum Roles {
+  CLIENT
+  ADMIN
+  GERANT
+}
+
 model Users {
   id        String     @id @default(uuid())
   email     String     @unique
   firstName String
   lastName  String
-  role      String
+  role      Roles      @default(CLIENT)
   hash      String
   salt      String
   isDeleted Boolean    @default(false)
@@ -38,7 +44,7 @@ model Facilities {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   messages    Messages[]
-  Bookings    Bookings[]
+  rooms       Rooms[]
 }
 
 model Rooms {
@@ -46,6 +52,8 @@ model Rooms {
   title       String     @db.VarChar(255)
   description String     @db.VarChar(1000)
   price       Decimal
+  facility    Facilities @relation(fields: [facilityId], references: [id])
+  facilityId  String
   isDeleted   Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -77,19 +85,17 @@ model Services {
 }
 
 model Bookings {
-  id         String     @id @default(uuid())
-  user       Users      @relation(fields: [userId], references: [id])
-  userId     String
-  facility   Facilities @relation(fields: [facilityId], references: [id])
-  facilityId String
-  room       Rooms      @relation(fields: [roomId], references: [id])
-  roomId     String
-  startDate  DateTime
-  endDate    DateTime
-  days       Int
-  isDeleted  Boolean    @default(false)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id        String   @id @default(uuid())
+  user      Users    @relation(fields: [userId], references: [id])
+  userId    String
+  room      Rooms    @relation(fields: [roomId], references: [id])
+  roomId    String
+  startDate DateTime
+  endDate   DateTime
+  days      Int
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model FeedBackTypes {

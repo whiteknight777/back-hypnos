@@ -3,6 +3,7 @@ const router = express.Router();
 const utils = require('../../lib/utils');
 const { PrismaClient } = require('@prisma/client')
 const Validator = require('validatorjs');
+const UsersFixtures = require('../../fixtures/Users/UsersFixtures')
 const UserSchema = require('../../validatorSchema/userSchema')
 const { Users } = new PrismaClient()
 // Models
@@ -41,12 +42,12 @@ router.get('/', async (req, res) => {
  *       200:
  *         description: Return user data.
  */
-router.get('/:_id', async (req, res) => {
-    const {_id} = req.params
+router.get('/:id', async (req, res) => {
+    const {id} = req.params
     try {
         Users.findUnique({
             where: {
-                id: _id
+                id: id
             },
         }).then(user => {
             if (user === null){
@@ -81,44 +82,49 @@ router.get('/:_id', async (req, res) => {
  *       200:
  *         description: Return user data.
  */
-router.put('/:_id', async (req, res) => {
-    const {_id} = req.params
+router.put('/:id', async (req, res) => {
+    const {id} = req.params
     const {
-        username,
-		email,
-		firstname,
-		lastname,
-		fullname,
-		roles,
-		pic,
-		company,
-		language,
-		timeZone,
+        email,
+		firstName,
+		lastName,
+		role,
+        isDeleted
     } = req.body;
     try {
-        let User = await Users.findById(_id)
-        .exec();
+        const User = await Users.findUnique({
+            where: {
+                id: id
+            },
+        });
         if(User){
-            User.username = username;
-            User.email = email;
-            User.firstname = firstname;
-            User.lastname = lastname;
-            User.fullname = User.getFullname();
-            User.roles = roles;
-            User.pic = pic;
-            User.company = company;
-            User.language = language;
-            User.timeZone = timeZone;
-            User.updatedAt = new Date().getTime();
-    
-            User.save((err, doc) => {
-                if (err) return console.error(err);
-                res.json({
-                    '@context': 'Users',
-                    data: User,
-                    apiVersion: 'V1'
-                });
-            });
+            const data = {
+                email,
+                firstName,
+                lastName,
+                role,
+                isDeleted
+            }
+            // Validate data
+            const validation = new Validator(data, UserSchema);
+            if(validation.passes()){
+                data.updatedAt = new Date();
+                Users.update({
+                    where: { id: id },
+                    data
+                }).then((user) => {
+                    console.log(`update user ${id} !`)
+                    res.json({
+                        '@context': 'Users',
+                        data: user,
+                        apiVersion: 'V1'
+                    });
+                }).catch(err => {
+                    res.json({ message: err.message });
+                })
+            }else{
+                res.json({ message: validation.errors });
+            }    
         }
 	} catch (e) {
 		res.status(500).json({ message: e.message });
@@ -137,27 +143,32 @@ router.put('/:_id', async (req, res) => {
  */
  router.patch('/change-password', async (req, res) => {
     const {
-        _id,
+        id,
         password,
 		newPassword,
     } = req.body;
     try {
-        let User = await Users.findById(_id);
+        let User = await Users.findUnique({
+            where: {
+                id: id
+            },
+        });
         if (User !== null) {
             const isValid = utils.validPassword(password, User.hash, User.salt);
             if (isValid) {
                 const saltHash = utils.genPassword(newPassword);
                 const { salt, hash } = saltHash;
-                User.hash = hash;
-                User.salt = salt;
-                User.updatedAt = new Date().getTime();
-        
-                User.save((err, doc) => {
-                    if (err) return console.error(err);
+                Users.update({
+                    where: { id: id },
+                    data: { hash, salt, updatedAt: new Date() }
+                }).then(() => {
+                    console.log(`update user ${id} password !`)
                     res.status(200).json({
                         message: 'user password had been changed with success.'
                     });
-                });
+                }).catch(err => {
+                    res.json({ message: err.message });
+                })
             }else{
                 res.status(400).json({ message: 'oups... wrong password' });
             }
@@ -187,7 +198,7 @@ router.put('/:_id', async (req, res) => {
 	} = req.body;
 
 	try {
-		// Store hash in your password DB.
+		// Store hash in your DB.
 		const saltHash = utils.genPassword(password);
 		const { salt, hash } = saltHash;
 		const newUser = {
@@ -219,6 +230,48 @@ router.put('/:_id', async (req, res) => {
         }
 	} catch (e) {
 		res.json({ message: e.message });
+	}
+});
+
+/**
+ * @swagger
+ * /users/fixtures:
+ *   post:
+ *     description: Add users fixtures
+ *     tags: [Users]
+ *     responses:
+ *       201:
+ *         description: Return sucess message.
+ */
+ router.post('/fixtures', async (req, res) => {
+	try {
+        // check if data exits
+        Users.findMany().then(results => {
+            if(results.length > 0) {
+                return res.json({ message: `Oups... there are already data on the users table (${results.length})!` });
+            }else{
+                // Store hash in your DB.
+                UsersFixtures.forEach(newUser => {
+                    const saltHash = utils.genPassword(newUser.password);
+                    const { salt, hash } = saltHash;
+                    newUser.hash = hash;
+                    newUser.salt = salt;
+                    delete newUser.password;
+                })
+                Users.createMany({
+                    data: UsersFixtures,
+                    skipDuplicates: true,
+                }).then(() => {
+                    return res.json({ message: "Users fixtures has been created successfully !" });
+                }).catch(err => {
+                    console.error(err.message)
+                })
+            }
+        }).catch(err => {
+            console.error(err.message)
+        })
+	} catch (e) {
+        console.error(err.message)
 	}
 });
 
