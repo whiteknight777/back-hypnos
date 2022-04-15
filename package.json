@@ -2,10 +2,10 @@
 	"name": "back-hypnos",
 	"version": "1.0.0",
 	"description": "back hypnos",
-	"main": "app.js",
+	"main": "server.js",
 	"scripts": {
-		"start": "node app.js",
-		"devStart": "nodemon app.js"
+		"start": "node server.js",
+		"devStart": "nodemon server.js"
 	},
 	"engines": {
 		"node": "15.8.0",

@@ -20,11 +20,7 @@ const { Facilities, Rooms } = new PrismaClient()
  */
 router.get('/', async (req, res) => {
     try {
-        const response = await Facilities.findMany({
-            include : {
-               rooms: true, 
-            }
-        });
+        const response = await Facilities.findMany();
         res.status(200).json({
             '@context': 'Facilities',
             data: response,
@@ -53,6 +49,14 @@ router.get('/:id', async (req, res) => {
             where: {
                 id: id
             },
+            include : {
+                rooms: {
+                    include: {
+                        services: true,
+                        medias: true,
+                    },
+                }, 
+            }
         }).then(facility => {
             if (facility === null){
                 res.status(400).json({
@@ -66,7 +70,7 @@ router.get('/:id', async (req, res) => {
                 });
             }
         }).catch(error => {
-            console.log(error.status)
+            console.log(error.message)
             res.status(400).json({
                 message: error.message
             });
