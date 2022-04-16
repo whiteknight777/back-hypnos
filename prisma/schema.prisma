@@ -63,15 +63,18 @@ model Rooms {
 }
 
 model Medias {
-  id           String   @id @default(uuid())
-  absolutePath String   @unique
-  room         Rooms    @relation(fields: [roomId], references: [id])
-  roomId       String
-  extension    String
-  isMain       Boolean  @default(false)
-  isDeleted    Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id        String   @id @default(uuid())
+  name      String   
+  filename  String   @unique
+  path      String   @unique
+  url       String   @unique
+  room      Rooms    @relation(fields: [roomId], references: [id])
+  roomId    String
+  extension String
+  isMain    Boolean  @default(false)
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Services {

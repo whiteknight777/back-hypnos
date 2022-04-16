@@ -33,11 +33,10 @@ content-type: application/json
 //------------- CHANGE USER PASSWORD ----------------
 //
 ###
-PATCH http://localhost:3006/users/change-password
+PATCH http://localhost:3006/users/change-password/a9771265-b0f1-429c-86e9-45e797bdee24
 content-type: application/json
 
 {
-    "id": "a9771265-b0f1-429c-86e9-45e797bdee24",
     "password": "1234",
     "newPassword": "demo"
 }

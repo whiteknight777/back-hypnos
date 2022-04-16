@@ -6,7 +6,7 @@ const Validator = require('validatorjs');
 const FacilitiesFixtures = require('../../fixtures/Facilities/FacilitiesFixtures')
 const FacilitySchema = require('../../validatorSchema/facilitySchema')
 const { Facilities, Rooms } = new PrismaClient()
-// Models
+// Models .sort((a, b) => a.name.localeCompare(b.name)),
 
 /**
  * @swagger
@@ -20,7 +20,13 @@ const { Facilities, Rooms } = new PrismaClient()
  */
 router.get('/', async (req, res) => {
     try {
-        const response = await Facilities.findMany();
+        const response = await Facilities.findMany({
+            orderBy: [
+                {
+                  name: 'asc',
+                },
+            ],
+        });
         res.status(200).json({
             '@context': 'Facilities',
             data: response,
@@ -58,17 +64,11 @@ router.get('/:id', async (req, res) => {
                 }, 
             }
         }).then(facility => {
-            if (facility === null){
-                res.status(400).json({
-                    message: "facility not found..."
-                });
-            }else{
                 res.status(200).json({
                     '@context': 'Facilities',
                     data: facility,
                     apiVersion: 'V1'
                 });
-            }
         }).catch(error => {
             console.log(error.message)
             res.status(400).json({

@@ -31,8 +31,7 @@ app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -43,11 +42,13 @@ const authRouter = require('./routes/V1/auth');
 const usersRouter = require('./routes/V1/users');
 const facilitiesRouter = require('./routes/V1/facilities');
 const roomsRouter = require('./routes/V1/rooms');
+const mediasRouter = require('./routes/V1/medias');
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/facilities', facilitiesRouter);
 app.use('/rooms', roomsRouter);
+app.use('/medias', mediasRouter);
 
 /**
  * -------------- API VIEWS ----------------

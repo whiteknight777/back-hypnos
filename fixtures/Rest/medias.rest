@@ -1,0 +1,39 @@
+//
+//------------- GET ALL MEDIAS ----------------
+//
+###
+GET http://localhost:3006/medias 
+content-type: application/json
+
+
+//
+//------------- GET ONE MEDIA ----------------
+//
+###
+GET http://localhost:3006/medias/b86d121b-5a06-4176-af19-647001c341a3
+content-type: application/json
+
+//
+//------------- PATCH ONE MEDIA ----------------
+//
+###
+PATCH http://localhost:3006/medias/b86d121b-5a06-4176-af19-647001c341a3
+content-type: application/json
+
+{
+    "isMain": true,
+    "isDeleted": false
+}
+
+
+//
+//------------- UPDATE ONE MEDIA ----------------
+// You must send a file
+// PUT http://localhost:3006/medias/id
+###
+
+//
+//------------- MEDIAS ADD ----------------
+// You must send one or more file
+// POST http://localhost:3006/medias
+###

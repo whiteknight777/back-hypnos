@@ -133,7 +133,7 @@ router.put('/:id', async (req, res) => {
 
 /**
  * @swagger
- * /users/change-password:
+ * /users/change-password/:id:
  *   patch:
  *     description: change user password
  *     tags: [Users]
@@ -141,9 +141,9 @@ router.put('/:id', async (req, res) => {
  *       200:
  *         description: Return success message.
  */
- router.patch('/change-password', async (req, res) => {
+ router.patch('/change-password/:id', async (req, res) => {
+    const {id} = req.params
     const {
-        id,
         password,
 		newPassword,
     } = req.body;
