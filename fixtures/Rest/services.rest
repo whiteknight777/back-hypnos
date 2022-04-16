@@ -1,0 +1,46 @@
+//
+//------------- GET ALL SERVICES ----------------
+//
+###
+GET http://localhost:3006/services 
+content-type: application/json
+
+
+//
+//------------- GET ONE SERVICE ----------------
+//
+###
+GET http://localhost:3006/services/091ac6ed-006d-41b3-b45b-4f70c4998ee8
+content-type: application/json
+
+
+//
+//------------- UPDATE ONE SERVICE ----------------
+//
+###
+PUT http://localhost:3006/services/091ac6ed-006d-41b3-b45b-4f70c4998ee8
+content-type: application/json
+
+{
+    "title": "Jacuzzi 2",
+    "isDeleted": false
+}
+
+//
+//------------- SERVICES ADD ----------------
+//
+###
+POST http://localhost:3006/services
+Content-Type: application/json
+
+{
+    "title": "service test",
+    "isDeleted": false
+}
+
+//
+//------------- USERS FIXTURES ----------------
+//
+###
+POST http://localhost:3006/services/fixtures
+content-type: application/json

@@ -43,3 +43,36 @@ Content-Type: application/json
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
     "isDeleted": false
 }
+
+
+//
+//------------- ROOM ADD SERVICES ----------------
+//
+###
+POST http://localhost:3006/rooms/services
+Content-Type: application/json
+
+{
+    "services": [
+        {
+            "roomId": "030b79ee-e5d1-45a4-bd7a-2c24d132b4a1",
+            "serviceId": "091ac6ed-006d-41b3-b45b-4f70c4998ee8"
+        },
+        {
+            "roomId": "030b79ee-e5d1-45a4-bd7a-2c24d132b4a1",
+            "serviceId": "0c8f36bd-85ea-4335-881c-67f40c1812d5"
+        }
+    ]
+}
+
+//
+//------------- ROOM DELETE SERVICE ----------------
+//
+###
+DELETE http://localhost:3006/rooms/services
+Content-Type: application/json
+
+{
+    "roomId": "030b79ee-e5d1-45a4-bd7a-2c24d132b4a1",
+    "serviceId": "091ac6ed-006d-41b3-b45b-4f70c4998ee8"
+}

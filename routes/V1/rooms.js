@@ -3,7 +3,8 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client')
 const Validator = require('validatorjs');
 const RoomSchema = require('../../validatorSchema/roomSchema')
-const { Rooms } = new PrismaClient()
+const RoomServiceSchema = require('../../validatorSchema/roomServiceSchema')
+const { Rooms, RoomServices } = new PrismaClient()
 
 /**
  * @swagger
@@ -19,7 +20,12 @@ router.get('/', async (req, res) => {
     try {
         const response = await Rooms.findMany({
             include : {
-               services: true, 
+               services: {
+                    select: {
+                        service: true,
+                        createdAt: true
+                    }
+               }, 
             }
         });
         res.status(200).json({
@@ -180,6 +186,98 @@ router.put('/:id', async (req, res) => {
         }else{
             res.json({ message: validation.errors });
         }
+	} catch (e) {
+		res.json({ message: e.message });
+	}
+});
+
+/**
+ * @swagger
+ * /rooms/services:
+ *   post:
+ *     description: Add new services to a room
+ *     tags: [Rooms]
+ *     responses:
+ *       201:
+ *         description: Return new room data.
+ */
+ router.post('/services', async (req, res) => {
+    const {
+		services
+	} = req.body;
+
+	try {
+        if(services.length > 0){
+            let dataToSave = []
+            let errors = []
+            services.forEach(service => {
+                // Validate data
+                const validation = new Validator(service, RoomServiceSchema);
+                if(validation.passes()){
+                    dataToSave.push(service)
+                }else{
+                    errors.push({
+                        service,
+                        error: validation.errors
+                    })
+                }
+            })
+            RoomServices.createMany({
+                data: dataToSave,
+                skipDuplicates: true,
+            }).then(() => {
+                res.json({
+                    '@context': 'RoomServices',
+                    data: { 
+                        success: dataToSave.length,
+                        errors: {
+                            errors,
+                            nbError: errors.length
+                        }
+                    },
+                    apiVersion: 'V1'
+                });
+            }).catch(err => {
+                console.error(err);
+                res.json({ message: err.message });
+            })
+        }
+	} catch (e) {
+		res.json({ message: e.message });
+	}
+});
+
+
+/**
+ * @swagger
+ * /rooms/services:
+ *   delete:
+ *     description: Delete room services
+ *     tags: [Rooms]
+ *     responses:
+ *       200:
+ *         description: Return success message
+ */
+ router.delete('/services', async (req, res) => {
+    const {
+		roomId,
+        serviceId
+	} = req.body;
+
+	try {
+        RoomServices.delete({
+            where: {
+                roomId_serviceId : {
+                    roomId, 
+                    serviceId
+                }
+            }
+        }).then(() => {
+            res.json({ message: "Service has been deleted with success !" });
+        }).catch(err => {
+            console.error(err);
+            res.json({ message: err.message });
+        })
 	} catch (e) {
 		res.json({ message: e.message });
 	}

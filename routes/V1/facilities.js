@@ -6,7 +6,7 @@ const Validator = require('validatorjs');
 const FacilitiesFixtures = require('../../fixtures/Facilities/FacilitiesFixtures')
 const FacilitySchema = require('../../validatorSchema/facilitySchema')
 const { Facilities, Rooms } = new PrismaClient()
-// Models .sort((a, b) => a.name.localeCompare(b.name)),
+// Models
 
 /**
  * @swagger
@@ -21,11 +21,7 @@ const { Facilities, Rooms } = new PrismaClient()
 router.get('/', async (req, res) => {
     try {
         const response = await Facilities.findMany({
-            orderBy: [
-                {
-                  name: 'asc',
-                },
-            ],
+            orderBy: [{name: 'asc'}],
         });
         res.status(200).json({
             '@context': 'Facilities',
