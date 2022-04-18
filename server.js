@@ -44,6 +44,7 @@ const facilitiesRouter = require('./routes/V1/facilities');
 const roomsRouter = require('./routes/V1/rooms');
 const mediasRouter = require('./routes/V1/medias');
 const servicesRouter = require('./routes/V1/services');
+const feedBackTypesRouter = require('./routes/V1/feedBackTypes');
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
@@ -51,6 +52,7 @@ app.use('/facilities', facilitiesRouter);
 app.use('/rooms', roomsRouter);
 app.use('/medias', mediasRouter);
 app.use('/services', servicesRouter);
+app.use('/feedBackTypes', feedBackTypesRouter);
 
 /**
  * -------------- API VIEWS ----------------

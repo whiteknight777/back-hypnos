@@ -1,0 +1,46 @@
+//
+//------------- GET ALL FEED BACK TYPES ----------------
+//
+###
+GET http://localhost:3006/feedBackTypes
+content-type: application/json
+
+
+//
+//------------- GET ONE FEED BACK TYPE ----------------
+//
+###
+GET http://localhost:3006/feedBackTypes/29b602cb-31a2-4526-96f3-9bbb864edd57
+content-type: application/json
+
+
+//
+//------------- UPDATE ONE FEED BACK TYPE ----------------
+//
+###
+PUT http://localhost:3006/feedBackTypes/29b602cb-31a2-4526-96f3-9bbb864edd57
+content-type: application/json
+
+{
+    "title": "Motif 2",
+    "isDeleted": false
+}
+
+//
+//------------- FEED BACK TYPES ADD ----------------
+//
+###
+POST http://localhost:3006/feedBackTypes
+Content-Type: application/json
+
+{
+    "title": "Motif test",
+    "isDeleted": false
+}
+
+//
+//------------- FEED BACK TYPES FIXTURES ----------------
+//
+###
+POST http://localhost:3006/feedBackTypes/fixtures
+content-type: application/json

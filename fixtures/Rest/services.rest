@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 //
-//------------- USERS FIXTURES ----------------
+//------------- SERVICES FIXTURES ----------------
 //
 ###
 POST http://localhost:3006/services/fixtures
