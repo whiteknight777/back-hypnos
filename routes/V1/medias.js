@@ -81,7 +81,6 @@ router.get('/:id', async (req, res) => {
                 });
             }
         }).catch(error => {
-            console.log(error.status)
             res.status(400).json({
                 message: error.message
             });
@@ -142,11 +141,11 @@ router.put('/:id', upload.single("file"), async (req, res) => {
                     });
                 }).catch(err => {
                     console.error(err);
-                    res.json({ message: err.message });
+                    res.status(400).json({ message: err.message });
                 })
             }else{
                 console.error(validation.errors);
-                res.json({ message: validation.errors });
+                res.status(400).json({ message: validation.errors });
             }    
         }
 	} catch (e) {
@@ -194,7 +193,7 @@ router.put('/:id', upload.single("file"), async (req, res) => {
                 });
             }).catch(err => {
                 console.error(err);
-                res.json({ message: err.message });
+                res.status(400).json({ message: err.message });
             })
         }
     } catch (error) {
@@ -248,7 +247,7 @@ router.put('/:id', upload.single("file"), async (req, res) => {
                 data: dataToSave,
                 skipDuplicates: true,
             }).then(() => {
-                res.json({
+                res.status(201).json({
                     '@context': 'Medias',
                     data: { 
                         success_upload: dataToSave.length,
@@ -261,11 +260,11 @@ router.put('/:id', upload.single("file"), async (req, res) => {
                 });
             }).catch(err => {
                 console.error(err);
-                res.json({ message: err.message });
+                res.status(400).json({ message: err.message });
             })
         }
 	} catch (e) {
-		res.json({ message: e.message });
+		res.status(400).json({ message: e.message });
 	}
 });
 

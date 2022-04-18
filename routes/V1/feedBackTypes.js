@@ -105,11 +105,11 @@ router.put('/:id', async (req, res) => {
                     });
                 }).catch(err => {
                     console.error(err);
-                    res.json({ message: err.message });
+                    res.status(400).json({ message: err.message });
                 })
             }else{
                 console.error(validation.errors);
-                res.json({ message: validation.errors });
+                res.status(400).json({ message: validation.errors });
             }    
         }
 	} catch (e) {
@@ -151,13 +151,13 @@ router.put('/:id', async (req, res) => {
                 });
             }).catch(err => {
                 console.error(err);
-                res.json({ message: err.message });
+                res.status(400).json({ message: err.message });
             })
         }else{
-            res.json({ message: validation.errors });
+            res.status(400).json({ message: validation.errors });
         }
 	} catch (e) {
-		res.json({ message: e.message });
+		res.status(400).json({ message: e.message });
 	}
 });
 
@@ -177,13 +177,13 @@ router.put('/:id', async (req, res) => {
         // check if data exits
         FeedBackTypes.findMany().then(results => {
             if(results.length > 0) {
-                return res.json({ message: `Oups... there are already data on the feedBackTypes table (${results.length})!` });
+                return res.status(400).json({ message: `Oups... there are already data on the feedBackTypes table (${results.length})!` });
             }else{
                 FeedBackTypes.createMany({
                     data: FeedBackTypesFixtures,
                     skipDuplicates: true,
                 }).then(() => {
-                    return res.json({ message: "FeedBackTypes fixtures has been created successfully !" });
+                    return res.status(201).json({ message: "FeedBackTypes fixtures has been created successfully !" });
                 }).catch(err => {
                     console.error(err.message)
                 })

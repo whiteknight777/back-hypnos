@@ -1,0 +1,30 @@
+//
+//------------- GET ALL MESSAGES ----------------
+//
+###
+GET http://localhost:3006/messages 
+content-type: application/json
+
+
+//
+//------------- GET ONE MESSAGE ----------------
+//
+###
+GET http://localhost:3006/messages/7d91f50e-a8a3-4309-884e-a328d0f05868
+content-type: application/json
+
+//
+//------------- ADD MESSAGE ----------------
+//
+###
+POST http://localhost:3006/messages
+Content-Type: application/json
+
+{
+    "firstName": "user",
+    "lastName": "Visiteur 1",
+    "email": "visiteur@demo.com",
+    "facilityId": "6cc33049-7e51-4a74-bdd6-b14fe69254e3",
+    "feedBackTypeId": "bd4a1d5f-1090-48b5-8c5c-73399ebab506",
+    "text": "Ceci est est un message test"
+}

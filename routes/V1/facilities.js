@@ -130,10 +130,10 @@ router.put('/:id', async (req, res) => {
                     });
                 }).catch(err => {
                     console.error(err);
-                    res.json({ message: err.message });
+                    res.status(400).json({ message: err.message });
                 })
             }else{
-                res.json({ message: validation.errors });
+                res.status(400).json({ message: validation.errors });
             }    
         }
 	} catch (e) {
@@ -182,13 +182,13 @@ router.put('/:id', async (req, res) => {
                 });
             }).catch(err => {
                 console.error(err);
-                res.json({ message: err.message });
+                res.status(400).json({ message: err.message });
             })
         }else{
-            res.json({ message: validation.errors });
+            res.status(400).json({ message: validation.errors });
         }
 	} catch (e) {
-		res.json({ message: e.message });
+		res.status(400).json({ message: e.message });
 	}
 });
 
@@ -207,7 +207,7 @@ router.put('/:id', async (req, res) => {
         // check if data exits
         Facilities.findMany().then(results => {
             if(results.length > 0) {
-                return res.json({ message: `Oups... there are already data on the facilities table (${results.length})!` });
+                return res.status(400).json({ message: `Oups... there are already data on the facilities table (${results.length})!` });
             }else{
                 FacilitiesFixtures.forEach(facility => {
                     const {rooms} = facility;
@@ -223,7 +223,7 @@ router.put('/:id', async (req, res) => {
                             data: rooms,
                             skipDuplicates: true,
                         }).then((newRoom) => {
-                            return res.json({ message: "Facilities fixtures has been created successfully !" });
+                            return res.status(201).json({ message: "Facilities fixtures has been created successfully !" });
                         }).catch(err => {
                             console.error(err.message)
                         })

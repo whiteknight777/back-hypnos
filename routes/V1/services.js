@@ -48,13 +48,12 @@ router.get('/:id', async (req, res) => {
                 id: id
             },
         }).then(service => {
-            res.status(200).json({
+            res.json({
                 '@context': 'Services',
                 data: service,
                 apiVersion: 'V1'
             });
         }).catch(error => {
-            console.log(error.status)
             res.status(400).json({
                 message: error.message
             });
@@ -105,12 +104,11 @@ router.put('/:id', async (req, res) => {
                         apiVersion: 'V1'
                     });
                 }).catch(err => {
-                    console.error(err);
-                    res.json({ message: err.message });
+                    res.status(400).json({ message: err.message });
                 })
             }else{
                 console.error(validation.errors);
-                res.json({ message: validation.errors });
+                res.status(400).json({ message: validation.errors });
             }    
         }
 	} catch (e) {
@@ -145,20 +143,20 @@ router.put('/:id', async (req, res) => {
             Services.create({
                 data: newService
             }).then((service) => {
-                res.json({
+                res.status(201).json({
                     '@context': 'Services',
                     data: service,
                     apiVersion: 'V1'
                 });
             }).catch(err => {
                 console.error(err);
-                res.json({ message: err.message });
+                res.status(400).json({ message: err.message });
             })
         }else{
-            res.json({ message: validation.errors });
+            res.status(400).json({ message: validation.errors });
         }
 	} catch (e) {
-		res.json({ message: e.message });
+		res.status(400).json({ message: e.message });
 	}
 });
 
