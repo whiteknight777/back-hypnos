@@ -54,7 +54,12 @@ router.get('/:id', async (req, res) => {
             include : {
                 rooms: {
                     include: {
-                        services: true,
+                        services: {
+                            select: {
+                                service: true,
+                                createdAt: true
+                            }
+                        },
                         medias: true,
                     },
                 }, 

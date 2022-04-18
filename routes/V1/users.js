@@ -120,10 +120,10 @@ router.put('/:id', async (req, res) => {
                         apiVersion: 'V1'
                     });
                 }).catch(err => {
-                    res.json({ message: err.message });
+                    res.status(400).json({ message: err.message });
                 })
             }else{
-                res.json({ message: validation.errors });
+                res.status(400).json({ message: validation.errors });
             }    
         }
 	} catch (e) {
@@ -215,21 +215,19 @@ router.put('/:id', async (req, res) => {
             Users.create({
                 data: newUser
             }).then((user) => {
-                console.log('new user created !')
-                res.json({
+                res.status(201).json({
                     '@context': 'Users',
                     data: user,
                     apiVersion: 'V1'
                 });
             }).catch(err => {
-                console.error(err);
-                res.json({ message: err.message });
+                res.status(400).json({ message: err.meta.target });
             })
         }else{
-            res.json({ message: validation.errors });
+            res.status(400).json({ message: validation.errors });
         }
 	} catch (e) {
-		res.json({ message: e.message });
+		res.status(400).json({ message: e.message });
 	}
 });
 
@@ -248,7 +246,7 @@ router.put('/:id', async (req, res) => {
         // check if data exits
         Users.findMany().then(results => {
             if(results.length > 0) {
-                return res.json({ message: `Oups... there are already data on the users table (${results.length})!` });
+                return res.status(400).json({ message: `Oups... there are already data on the users table (${results.length})!` });
             }else{
                 // Store hash in your DB.
                 UsersFixtures.forEach(newUser => {
@@ -262,7 +260,7 @@ router.put('/:id', async (req, res) => {
                     data: UsersFixtures,
                     skipDuplicates: true,
                 }).then(() => {
-                    return res.json({ message: "Users fixtures has been created successfully !" });
+                    return res.status(201).json({ message: "Users fixtures has been created successfully !" });
                 }).catch(err => {
                     console.error(err.message)
                 })

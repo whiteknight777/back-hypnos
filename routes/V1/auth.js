@@ -21,7 +21,7 @@ router.post('/login', async (req, res, next) => {
 			if (err || !user) {
 				return res.status(401).json({
 					success: false,
-					error: 'email ou mot de passe incorrecte.',
+					error: 'email ou mot de passe incorrect.',
 				});
 			}
 
