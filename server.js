@@ -46,6 +46,7 @@ const mediasRouter = require('./routes/V1/medias');
 const servicesRouter = require('./routes/V1/services');
 const feedBackTypesRouter = require('./routes/V1/feedBackTypes');
 const messagesRouter = require('./routes/V1/messages');
+const bookingsRouter = require('./routes/V1/bookings');
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
@@ -55,6 +56,7 @@ app.use('/medias', mediasRouter);
 app.use('/services', servicesRouter);
 app.use('/feedBackTypes', feedBackTypesRouter);
 app.use('/messages', messagesRouter);
+app.use('/bookings', bookingsRouter);
 
 /**
  * -------------- API VIEWS ----------------

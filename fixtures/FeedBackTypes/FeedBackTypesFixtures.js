@@ -14,9 +14,5 @@ module.exports = [
     {
         title: "J’ai un souci avec cette application",
         isDeleted: false,
-    },
-    {
-        title: "Autre",
-        isDeleted: false,
-    },
+    }
 ]

@@ -18,7 +18,9 @@ const { FeedBackTypes } = new PrismaClient()
  */
 router.get('/', async (req, res) => {
     try {
-        const response = await FeedBackTypes.findMany();
+        const response = await FeedBackTypes.findMany({
+            orderBy: [{title: 'asc'}],
+        });
         res.status(200).json({
             '@context': 'FeedBackTypes',
             data: response,

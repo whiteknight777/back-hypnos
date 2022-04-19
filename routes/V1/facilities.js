@@ -98,6 +98,7 @@ router.put('/:id', async (req, res) => {
 		city,
 		address,
 		description,
+        gerantId,
 		isDeleted
     } = req.body;
     try {
@@ -112,6 +113,7 @@ router.put('/:id', async (req, res) => {
                 city,
                 address,
                 description,
+                gerantId,
                 isDeleted
             }
             // Validate data
@@ -157,6 +159,7 @@ router.put('/:id', async (req, res) => {
 		city,
 		address,
 		description,
+        gerantId,
 		isDeleted
 	} = req.body;
 
@@ -166,6 +169,7 @@ router.put('/:id', async (req, res) => {
             city,
             address,
             description,
+            gerantId,
             isDeleted
 		};
         // Validate data
@@ -174,7 +178,6 @@ router.put('/:id', async (req, res) => {
             Facilities.create({
                 data: newFacility
             }).then((user) => {
-                console.log('new facility created !')
                 res.json({
                     '@context': 'Facilities',
                     data: user,
@@ -222,7 +225,7 @@ router.put('/:id', async (req, res) => {
                         Rooms.createMany({
                             data: rooms,
                             skipDuplicates: true,
-                        }).then((newRoom) => {
+                        }).then(() => {
                             return res.status(201).json({ message: "Facilities fixtures has been created successfully !" });
                         }).catch(err => {
                             console.error(err.message)

@@ -1,0 +1,41 @@
+//
+//------------- GET ALL BOOKINGS ----------------
+//
+###
+GET http://localhost:3006/bookings 
+content-type: application/json
+
+
+//
+//------------- GET ONE BOOKING ----------------
+//
+###
+GET http://localhost:3006/bookings/97a06fba-c714-4329-83a3-e4286a6f3e71
+content-type: application/json
+
+
+//
+//------------- UPDATE ONE BOOKING ----------------
+//
+###
+PATCH http://localhost:3006/bookings/f37ddf0d-a6a5-4c9f-ba7b-400b3e0fe328
+content-type: application/json
+
+{
+    "isDeleted": false
+}
+
+//
+//------------- BOOKINGS ADD ----------------
+//
+###
+POST http://localhost:3006/bookings
+Content-Type: application/json
+
+{
+    "userId": "d4af34e7-c833-4efb-a310-31e0fb186ad2",
+    "roomId": "c51819ba-8903-4a05-87cc-b46790bd6ff3",
+    "startDate": "25/04/2022",
+    "endDate": "28/04/2022",
+    "isDeleted": false
+}

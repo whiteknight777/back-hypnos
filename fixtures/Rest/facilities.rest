@@ -26,6 +26,7 @@ content-type: application/json
     "city": "Lyon",
     "address": "63 Rue Denuzière (69002)",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+    "gerantId": null,
     "isDeleted": false
 }
 
@@ -41,6 +42,7 @@ Content-Type: application/json
     "city": "Lyon",
     "address": "63 Rue Denuzière (69002)",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+    "gerantId": null,
     "isDeleted": false
 }
 

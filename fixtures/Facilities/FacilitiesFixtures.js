@@ -5,6 +5,7 @@ module.exports = [
         address: "63 Rue Denuzière (69002)",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
         isDeleted: false,
+        gerantId: null,
         rooms: [
             { 
                 title: "Suite 1",
@@ -32,6 +33,7 @@ module.exports = [
         address: "Allée Adrienne-Lecouvreur (75007)",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
         isDeleted: false,
+        gerantId: null,
         rooms: [
             { 
                 title: "Suite 4",
@@ -59,6 +61,7 @@ module.exports = [
         address: "Avenue Jean Médecin (06)",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
         isDeleted: false,
+        gerantId: null,
         rooms: [
             { 
                 title: "Suite 7",

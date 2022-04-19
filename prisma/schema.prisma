@@ -21,17 +21,18 @@ enum Roles {
 }
 
 model Users {
-  id        String     @id @default(uuid())
-  email     String     @unique
+  id        String      @id @default(uuid())
+  email     String      @unique
   firstName String
   lastName  String
-  role      Roles      @default(CLIENT)
+  role      Roles       @default(CLIENT)
   hash      String
   salt      String
-  isDeleted Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  isDeleted Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   Bookings  Bookings[]
+  Facility  Facilities?
 }
 
 model Facilities {
@@ -39,6 +40,8 @@ model Facilities {
   name        String     @db.VarChar(255)
   city        String
   address     String
+  gerant      Users?     @relation(fields: [gerantId], references: [id])
+  gerantId    String?    @unique
   description String     @db.VarChar(1000)
   isDeleted   Boolean    @default(false)
   createdAt   DateTime   @default(now())

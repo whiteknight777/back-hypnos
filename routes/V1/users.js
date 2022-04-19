@@ -113,7 +113,6 @@ router.put('/:id', async (req, res) => {
                     where: { id: id },
                     data
                 }).then((user) => {
-                    console.log(`update user ${id} !`)
                     res.json({
                         '@context': 'Users',
                         data: user,
