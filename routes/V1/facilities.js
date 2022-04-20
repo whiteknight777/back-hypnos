@@ -36,6 +36,37 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /facilities/active:
+ *   get:
+ *     description: Get all active facilities
+ *     tags: [Facilities]
+ *     responses:
+ *       200:
+ *         description: Returns facilities data.
+ */
+ router.get('/active', async (req, res) => {
+    try {
+        const response = await Facilities.findMany({
+            orderBy: [{name: 'asc'}],
+            where: {
+                isDeleted: {
+                    equals: false,
+                }
+            }
+        });
+        res.status(200).json({
+            '@context': 'Facilities',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+/**
+ * @swagger
  * /facilities/:id:
  *   get:
  *     description: Get one facility
@@ -119,12 +150,11 @@ router.put('/:id', async (req, res) => {
             // Validate data
             const validation = new Validator(data, FacilitySchema);
             if(validation.passes()){
-                data.updatedAt = new Date().getTime();
+                data.updatedAt = new Date();
                 Facilities.update({
                     where: { id: id },
                     data
                 }).then((facility) => {
-                    console.log(`update facility ${id} !`)
                     res.json({
                         '@context': 'Facilities',
                         data: facility,

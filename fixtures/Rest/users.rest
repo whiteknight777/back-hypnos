@@ -7,6 +7,13 @@ content-type: application/json
 
 
 //
+//------------- GET ALL USERS GERANTS----------------
+//
+###
+GET http://localhost:3006/users/gerants 
+content-type: application/json
+
+//
 //------------- GET ONE USER ----------------
 //
 ###

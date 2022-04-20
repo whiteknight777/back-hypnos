@@ -5,6 +5,13 @@
 GET http://localhost:3006/facilities 
 content-type: application/json
 
+//
+//------------- GET ALL ACTIVE FACILITIES ----------------
+//
+###
+GET http://localhost:3006/facilities/active 
+content-type: application/json
+
 
 //
 //------------- GET ONE FACILITY ----------------

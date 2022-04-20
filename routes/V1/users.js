@@ -34,6 +34,64 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /users/active:
+ *   get:
+ *     description: Get all active users 
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Returns users data.
+ */
+ router.get('/active', async (req, res) => {
+    try {
+        const response = await Users.findMany({
+            where: {
+                isDeleted: {
+                    equals: false,
+                }
+            }
+        });
+        res.status(200).json({
+            '@context': 'Users',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+/**
+ * @swagger
+ * /users/gerants:
+ *   get:
+ *     description: Get all users Gerants
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Returns users data.
+ */
+ router.get('/gerants', async (req, res) => {
+    try {
+        const response = await Users.findMany({
+            where: {
+                role: "GERANT"
+            }
+        });
+        res.status(200).json({
+            '@context': 'Users',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+/**
+ * @swagger
  * /users/:id:
  *   get:
  *     description: Get one user

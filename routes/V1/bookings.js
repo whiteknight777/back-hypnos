@@ -26,6 +26,7 @@ router.get('/', async (req, res) => {
                 days: true,
                 createdAt: true,
                 updatedAt: true,
+                isDeleted: true,
                 user: {
                     select: {
                         id: true,
@@ -36,6 +37,65 @@ router.get('/', async (req, res) => {
                     select: {
                         id: true,
                         title: true,
+                        price: true,
+                        facility: {
+                            select: {
+                                id: true,
+                                name: true,
+                            }
+                        }
+                    }
+                },
+            }
+        });
+        res.status(200).json({
+            '@context': 'Bookings',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+/**
+ * @swagger
+ * /bookings/:userId:
+ *   get:
+ *     description: Get all bookings
+ *     tags: [Bookings]
+ *     responses:
+ *       200:
+ *         description: Returns bookings data.
+ */
+ router.get('/:userId', async (req, res) => {
+    const {userId} = req.params
+    try {
+        const response = await Bookings.findMany({
+            where: {
+                userId: userId
+            },
+            select : {
+                id: true,
+                startDate: true,
+                endDate: true,
+                days: true,
+                createdAt: true,
+                updatedAt: true,
+                isDeleted: true,
+                user: {
+                    select: {
+                        id: true,
+                        email: true,
+                    }
+                },
+                room: {
+                    select: {
+                        id: true,
+                        title: true,
+                        price: true,
                         facility: {
                             select: {
                                 id: true,
@@ -81,6 +141,7 @@ router.get('/:id', async (req, res) => {
                 days: true,
                 createdAt: true,
                 updatedAt: true,
+                isDeleted: true,
                 user: {
                     select: {
                         id: true,
@@ -91,6 +152,7 @@ router.get('/:id', async (req, res) => {
                     select: {
                         id: true,
                         title: true,
+                        price: true,
                         facility: {
                             select: {
                                 id: true,
@@ -119,7 +181,7 @@ router.get('/:id', async (req, res) => {
 /**
  * @swagger
  * /bookings/:id:
- *   put:
+ *   patch:
  *     description: update one booking
  *     tags: [Bookings]
  *     responses:

@@ -7,6 +7,14 @@ content-type: application/json
 
 
 //
+//------------- GET ALL CLIENT BOOKINGS ----------------
+//
+###
+GET http://localhost:3006/bookings/d4af34e7-c833-4efb-a310-31e0fb186ad2
+content-type: application/json
+
+
+//
 //------------- GET ONE BOOKING ----------------
 //
 ###
