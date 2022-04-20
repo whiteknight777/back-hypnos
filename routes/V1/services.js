@@ -32,6 +32,37 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /services/active:
+ *   get:
+ *     description: Get all active services
+ *     tags: [Services]
+ *     responses:
+ *       200:
+ *         description: Returns services data.
+ */
+ router.get('/active', async (req, res) => {
+    try {
+        const response = await Services.findMany({
+            orderBy: [{title: 'asc'}],
+            where: {
+                isDeleted: {
+                    equals: false,
+                }
+            }
+        });
+        res.status(200).json({
+            '@context': 'Services',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+/**
+ * @swagger
  * /services/:id:
  *   get:
  *     description: Get one service

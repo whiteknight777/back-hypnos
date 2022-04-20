@@ -12,12 +12,19 @@ content-type: application/json
 GET http://localhost:3006/facilities/active 
 content-type: application/json
 
-
 //
 //------------- GET ONE FACILITY ----------------
 //
 ###
 GET http://localhost:3006/facilities/0618e7b0-0e93-467a-91a5-cb65f01e83b
+content-type: application/json
+
+
+//
+//------------- GET GERANT FACILITY ----------------
+//
+###
+GET http://localhost:3006/facilities/gerant/291cb31d-ff9c-4939-a7b4-1a719a47da9c
 content-type: application/json
 
 

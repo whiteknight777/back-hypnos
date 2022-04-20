@@ -5,6 +5,13 @@
 GET http://localhost:3006/services 
 content-type: application/json
 
+//
+//------------- GET ALL SERVICES ----------------
+//
+###
+GET http://localhost:3006/services/active 
+content-type: application/json
+
 
 //
 //------------- GET ONE SERVICE ----------------

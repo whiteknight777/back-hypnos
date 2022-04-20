@@ -5,6 +5,12 @@
 GET http://localhost:3006/rooms 
 content-type: application/json
 
+//
+//------------- GET ALL FACILITY ROOMS ----------------
+//
+###
+GET http://localhost:3006/rooms/facility/ec461261-6d84-4107-a558-5518b947bd16 
+content-type: application/json
 
 //
 //------------- GET ONE ROOM ----------------
@@ -69,10 +75,10 @@ Content-Type: application/json
 //------------- ROOM DELETE SERVICE ----------------
 //
 ###
-DELETE http://localhost:3006/rooms/services
+POST http://localhost:3006/rooms/remove/services
 Content-Type: application/json
 
 {
-    "roomId": "030b79ee-e5d1-45a4-bd7a-2c24d132b4a1",
-    "serviceId": "091ac6ed-006d-41b3-b45b-4f70c4998ee8"
+    "roomId": "4f8e85d5-1bfd-4a08-9022-4447a63df76b",
+    "serviceId": "0f12551b-1e35-4671-96f1-cb89bc4f44c8"
 }

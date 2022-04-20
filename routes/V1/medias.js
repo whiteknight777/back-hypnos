@@ -204,7 +204,7 @@ router.put('/:id', upload.single("file"), async (req, res) => {
 
 /**
  * @swagger
- * /medias:
+ * /medias/:roomId:
  *   post:
  *     description: Upload new media(s)
  *     tags: [Medias]
@@ -212,14 +212,12 @@ router.put('/:id', upload.single("file"), async (req, res) => {
  *       201:
  *         description: Return new media data.
  */
- router.post('/',  upload.array("files"), async (req, res) => {
+ router.post('/:roomId',  upload.array("files"), async (req, res) => {
+    const {roomId} = req.params
     const { files } = req;
-    const {
-		roomId
-	} = req.body;
 
 	try {
-        if(files.length > 0){
+        if(files?.length > 0){
             const dataToSave = []
             const errors = []
             files.forEach(file => {

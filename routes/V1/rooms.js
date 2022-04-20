@@ -41,6 +41,43 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /rooms/facility/:id:
+ *   get:
+ *     description: Get all rooms
+ *     tags: [Rooms]
+ *     responses:
+ *       200:
+ *         description: Returns rooms data.
+ */
+ router.get('/facility/:id', async (req, res) => {
+    const {id} = req.params
+    try {
+        const response = await Rooms.findMany({
+            where: {
+                facilityId: id,
+            },
+            include : {
+               services: {
+                    select: {
+                        service: true,
+                        createdAt: true
+                    }
+               }, 
+            }
+        });
+        res.status(200).json({
+            '@context': 'Rooms',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+/**
+ * @swagger
  * /rooms/:id:
  *   get:
  *     description: Get one room
@@ -246,15 +283,15 @@ router.put('/:id', async (req, res) => {
 
 /**
  * @swagger
- * /rooms/services:
- *   delete:
+ * /rooms/remove/services:
+ *   post:
  *     description: Delete room services
  *     tags: [Rooms]
  *     responses:
  *       200:
  *         description: Return success message
  */
- router.delete('/services', async (req, res) => {
+ router.post('/remove/services', async (req, res) => {
     const {
 		roomId,
         serviceId

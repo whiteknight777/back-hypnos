@@ -22,6 +22,24 @@ router.get('/', async (req, res) => {
     try {
         const response = await Facilities.findMany({
             orderBy: [{name: 'asc'}],
+            select : {
+                id: true,
+                name: true,
+                city: true,
+                address: true,
+                description: true,
+                isDeleted: true,
+                createdAt: true,
+                updatedAt: true,
+                gerant: {
+                    select: {
+                        id: true,
+                        email: true,
+                        lastName: true,
+                        firstName: true,
+                    },
+                }, 
+            }
         });
         res.status(200).json({
             '@context': 'Facilities',
@@ -67,6 +85,53 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /facilities/gerant/:gerantId:
+ *   get:
+ *     description: Get the gerant facility
+ *     tags: [Facilities]
+ *     responses:
+ *       200:
+ *         description: Return one facility data.
+ */
+router.get('/gerant/:gerantId', async (req, res) => {
+    const {gerantId} = req.params
+    try {
+        Facilities.findUnique({
+            where: {
+                gerantId: gerantId
+            },
+            include : {
+                rooms: {
+                    include: {
+                        services: {
+                            select: {
+                                service: true,
+                                createdAt: true
+                            }
+                        },
+                        medias: true,
+                    },
+                }, 
+            }
+        }).then(facility => {
+                res.status(200).json({
+                    '@context': 'Facilities',
+                    data: facility,
+                    apiVersion: 'V1'
+                });
+        }).catch(error => {
+            console.log(error.message)
+            res.status(400).json({
+                message: error.message
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+/**
+ * @swagger
  * /facilities/:id:
  *   get:
  *     description: Get one facility
@@ -75,7 +140,7 @@ router.get('/', async (req, res) => {
  *       200:
  *         description: Return facility data.
  */
-router.get('/:id', async (req, res) => {
+ router.get('/:id', async (req, res) => {
     const {id} = req.params
     try {
         Facilities.findUnique({

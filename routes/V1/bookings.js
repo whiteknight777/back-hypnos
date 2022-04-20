@@ -59,7 +59,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-
 /**
  * @swagger
  * /bookings/:userId:
@@ -76,6 +75,68 @@ router.get('/', async (req, res) => {
         const response = await Bookings.findMany({
             where: {
                 userId: userId
+            },
+            select : {
+                id: true,
+                startDate: true,
+                endDate: true,
+                days: true,
+                createdAt: true,
+                updatedAt: true,
+                isDeleted: true,
+                user: {
+                    select: {
+                        id: true,
+                        email: true,
+                    }
+                },
+                room: {
+                    select: {
+                        id: true,
+                        title: true,
+                        price: true,
+                        facility: {
+                            select: {
+                                id: true,
+                                name: true,
+                            }
+                        }
+                    }
+                },
+            }
+        });
+        res.status(200).json({
+            '@context': 'Bookings',
+            data: response,
+            apiVersion: 'V1',
+            totalItems: response.length,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+/**
+ * @swagger
+ * /bookings/facility/:facilityId:
+ *   get:
+ *     description: Get all facility bookings
+ *     tags: [Bookings]
+ *     responses:
+ *       200:
+ *         description: Returns bookings data.
+ */
+ router.get('/facility/:facilityId', async (req, res) => {
+    const {facilityId} = req.params
+    try {
+        const response = await Bookings.findMany({
+            where: {
+                room: {
+                    facility: {
+                        id: facilityId,
+                    }
+                }
             },
             select : {
                 id: true,
